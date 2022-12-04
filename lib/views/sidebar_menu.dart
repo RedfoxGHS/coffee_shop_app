@@ -6,7 +6,7 @@ class SideBarMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color.fromARGB(255, 133, 93, 56),
+      backgroundColor: const Color.fromARGB(255, 133, 93, 56),
       child: ListView(
         padding: EdgeInsets.zero,
         children: const <Widget>[

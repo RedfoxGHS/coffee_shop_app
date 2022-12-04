@@ -12,7 +12,7 @@ Future<List<Item>> fetchItems(http.Client client) async {
   final response = await http.get(Uri.parse('$baseUrl/item'));
 
   if (response.statusCode == 200) {
-    return compute(parseItems, response.body);
+    return compute(parseItems, utf8.decode(response.bodyBytes));
   } else {
     throw Exception('Failed to load items');
   }
