@@ -1,9 +1,7 @@
 import 'package:coffee_shop_app/controllers/item_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:coffee_shop_app/models/item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'dart:math';
 
 class ItemsList extends StatelessWidget {
 
@@ -46,9 +44,9 @@ class ItemsList extends StatelessWidget {
   setColorCards(int index) {
 
     if (index % 2 == 0) {
-      return Color.fromARGB(255, 138, 117, 92);
+      return const Color.fromARGB(255, 138, 117, 92);
     } else {
-      return Color.fromARGB(255, 112, 91, 78);
+      return const Color.fromARGB(255, 112, 91, 78);
     }
   }
 }
