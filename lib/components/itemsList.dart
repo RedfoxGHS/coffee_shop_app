@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
-bool color = true;
-
 class ItemsList extends StatelessWidget {
 
   const ItemsList({super.key});
@@ -22,7 +20,7 @@ class ItemsList extends StatelessWidget {
             itemBuilder: (context, index) {
               return itemCard(
                 item: snapshot.data![index],
-                // onTap: () => onItemTap(index),
+                index: index
               );
             },
           );
@@ -34,24 +32,22 @@ class ItemsList extends StatelessWidget {
     );
   }
 
-  Widget itemCard({required Item item}) {
+  Widget itemCard({required Item item, int index = 0}) {
     return Card(
       child: ListTile(
         title: Text(item.name),
         subtitle: Text(item.description),
         trailing: Text('Preço: ${item.price.toString()}'),
-        tileColor: setColorCards(),
+        tileColor: setColorCards(index),
       ),
     );
   }
 
-  setColorCards() {
+  setColorCards(int index) {
 
-    if (color) {
-      color = false;
+    if (index % 2 == 0) {
       return Color.fromARGB(255, 138, 117, 92);
     } else {
-      color = true;
       return Color.fromARGB(255, 112, 91, 78);
     }
   }
