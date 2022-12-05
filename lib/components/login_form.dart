@@ -1,13 +1,17 @@
+import 'package:coffee_shop_app/views/admin_home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String login = '';
 String password = '';
+bool isLogged = false;
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -15,20 +19,20 @@ class LoginForm extends StatelessWidget {
         TextField(
           decoration: const InputDecoration(
             filled: true,
-            fillColor: Color.fromARGB(200, 153, 130, 109),
-            focusedBorder: OutlineInputBorder(
+            fillColor:  Color.fromARGB(200, 153, 130, 109),
+            focusedBorder:  OutlineInputBorder(
               borderSide:  BorderSide(
                 color:  Color.fromARGB(255, 75, 57, 37),
                 width: 3,
               ),
             ),
-            border: OutlineInputBorder(),
-            floatingLabelStyle: TextStyle(
+            border:  OutlineInputBorder(),
+            floatingLabelStyle:  TextStyle(
               color: Color.fromARGB(255, 75, 57, 37),
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
-            labelText: 'Usuário',
+            labelText: 'Login'
           ),
           onChanged: (value) {
             login = value;
@@ -62,7 +66,14 @@ class LoginForm extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             if (login == 'admin' && password == 'admin') {
-              Navigator.pushNamed(context, '/menu');
+              isLogged = true;
+              logging();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AdminHomeView(),
+                ),
+              );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -81,5 +92,8 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-
+  logging() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogged', isLogged);
+  }
 }

@@ -1,9 +1,16 @@
+import 'package:coffee_shop_app/views/admin_home_view.dart';
 import 'package:coffee_shop_app/views/login.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SideBarMenu extends StatelessWidget {
+class SideBarMenu extends StatefulWidget {
   const SideBarMenu({Key? key}) : super(key: key);
 
+  @override
+  State<SideBarMenu> createState() => _SideBarMenuState();
+}
+
+class _SideBarMenuState extends State<SideBarMenu> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -44,14 +51,27 @@ class SideBarMenu extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.account_circle),
             title: const Text('Administrador'),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
-            }
+            onTap: () => buttomLoginAction(context),
           ),
         ],
       ),
     );
   }
   
+  Future<bool> isLogged() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLogged') ?? false;
+  }
 
+  buttomLoginAction(BuildContext context) async {
+    bool? logged = await isLogged();
+
+    if(!mounted) return;
+
+    if(logged == true){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminHomeView()));
+    }else{
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+    }
+  }
 }
