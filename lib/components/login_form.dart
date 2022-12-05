@@ -40,14 +40,25 @@ class LoginForm extends StatelessWidget {
           decoration: const InputDecoration(
             filled: true,
             fillColor: Color.fromARGB(200, 153, 130, 109),
+            focusedBorder: OutlineInputBorder(
+              borderSide:  BorderSide(
+                color:  Color.fromARGB(255, 75, 57, 37),
+                width: 3,
+              ),
+            ),
             border: OutlineInputBorder(),
+            floatingLabelStyle: TextStyle(
+              color: Color.fromARGB(255, 75, 57, 37),
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
             labelText: 'Senha',
           ),
           onChanged: (value) {
             password = value;
           },
         ),
-        const SizedBox(height: 80),
+        const SizedBox(height: 60),
         ElevatedButton(
           onPressed: () {
             if (login == 'admin' && password == 'admin') {
