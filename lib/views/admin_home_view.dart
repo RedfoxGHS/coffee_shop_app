@@ -25,6 +25,26 @@ class AdminHomeView extends StatelessWidget {
         ),
         child: const AdminItemsView(),
       ),
+
+      floatingActionButton: SizedBox(
+        width: 70,
+        height: 70,
+        child: Material(
+          type: MaterialType.transparency,
+          child: Ink(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white, width: 1.5),
+              color: const Color.fromARGB(255, 61, 177, 121),
+              shape: BoxShape.circle,
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(500.0), 
+              onTap: () {},
+              child: const Icon(Icons.add, size: 40)
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

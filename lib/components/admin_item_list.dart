@@ -13,6 +13,7 @@ class AdminItemList extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
+            padding: const EdgeInsets.only(bottom: 75),
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               return itemCard(
