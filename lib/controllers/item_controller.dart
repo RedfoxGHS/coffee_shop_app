@@ -39,3 +39,16 @@ Future<Item> editItem(Item item) async {
     throw Exception('Failed to edit item');
   }
 }
+
+Future<void> deleteItem(int itemId) async {
+  final response = await http.delete(
+    Uri.parse('$baseUrl/item/$itemId'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('Failed to delete item');
+  }
+}

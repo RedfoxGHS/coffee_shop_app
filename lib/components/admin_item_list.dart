@@ -60,7 +60,7 @@ class AdminItemList extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  // showDialog(context: context, builder: (context) => deleteItemDialog(item));
+                  showDialog(context: context, builder: (context) => deleteItemDialog(item));
                 }, 
                 icon: const Icon(
                   Icons.delete,
@@ -168,4 +168,31 @@ class AdminItemList extends StatelessWidget {
       },
     );
   }
+
+  Builder deleteItemDialog(Item item) {
+    return Builder(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Deletando item com id: ${item.itemId}'),
+          content: Text('Tem certeza que deseja deletar este item [${item.name}]?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              }, 
+              child: const Text('Cancelar')
+            ),
+            TextButton(
+              onPressed: () {
+                deleteItem(item.itemId);
+                Navigator.pop(context);
+              }, 
+              child: const Text('Deletar')
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
