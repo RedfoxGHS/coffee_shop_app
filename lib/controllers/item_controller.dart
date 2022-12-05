@@ -23,3 +23,19 @@ List<Item> parseItems(String responseBody) {
 
   return parsed.map<Item>((json) => Item.fromJson(json)).toList();
 }
+
+Future<Item> editItem(Item item) async {
+  final response = await http.put(
+    Uri.parse('$baseUrl/item/${item.itemId}'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(item.toJson()),
+  );
+
+  if (response.statusCode == 200) {
+    return Item.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to edit item');
+  }
+}

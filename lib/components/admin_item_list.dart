@@ -16,6 +16,7 @@ class AdminItemList extends StatelessWidget {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               return itemCard(
+                context: context,
                 item: snapshot.data![index],
                 index: index
               );
@@ -29,22 +30,19 @@ class AdminItemList extends StatelessWidget {
     );
   }
 
-  Widget itemCard({required Item item, int index = 0}) {
+  Widget itemCard({required BuildContext context, required Item item, int index = 0}) {
     return Card(
       child: ListTile(
         title: Text('id: ${item.itemId}\nnome: ${item.name}'),
-        subtitle: Text('Categoria: ${item.category}\n' + 
-                      'Descrição: ${item.description}\n' + 
-                      'Preço: ${item.price.toString()}'),
-        trailing: Container(
+        subtitle: Text('Categoria: ${item.category}\n' 'Descrição: ${item.description}\n'  'Preço: ${item.price.toString()}'),
+        trailing: SizedBox(
           width: 100,
-          // centraliza na vertical
 
           child: Row(
             children: [
               IconButton(
                 onPressed: () {
-                  print('Editar item');
+                  showDialog(context: context, builder:(context) => editItemDialog(item));
                 }, 
                 alignment: Alignment.center,
 
@@ -62,7 +60,7 @@ class AdminItemList extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  print('Deletar item');
+                  // showDialog(context: context, builder: (context) => deleteItemDialog(item));
                 }, 
                 icon: const Icon(
                   Icons.delete,
@@ -91,5 +89,83 @@ class AdminItemList extends StatelessWidget {
     } else {
       return const Color.fromARGB(255, 112, 91, 78);
     }
+  }
+
+  Builder editItemDialog(Item item) {
+    String name = item.name;
+    String category = item.category;
+    String description = item.description;
+    double price = item.price;
+
+    return Builder(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Editando item com id: ${item.itemId}'),
+          content: SizedBox(
+            height: 300,
+            width: 300,
+            child: Column(
+              children: [
+                TextField(
+                  decoration:  InputDecoration(
+                    labelText: 'Nome',
+                    hintText: item.name,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
+                  onChanged: (value) {
+                    name = value;
+                  },
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Categoria',
+                    hintText: item.category,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
+                  onChanged: (value) {
+                    category = value;
+                  },
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Descrição',
+                    hintText: item.description,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
+                  onChanged: (value) {
+                    description = value;
+                  },
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Preço',
+                    hintText: item.price.toString(),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
+                  onChanged: (value) {
+                    price = double.parse(value);
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              }, 
+              child: const Text('Cancelar')
+            ),
+            TextButton(
+              onPressed: () {
+                editItem(Item(itemId: item.itemId, name: name, description: description, category: category, price: price));
+                Navigator.pop(context);
+              }, 
+              child: const Text('Salvar')
+            ),
+          ],
+        );
+      },
+    );
   }
 }

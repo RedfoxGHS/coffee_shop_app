@@ -14,4 +14,11 @@ class Item{
         category = json['category'],
         price = json['price'];
 
+  Map<String, dynamic> toJson() => {
+        'itemId': itemId,
+        'name': name,
+        'description': description,
+        'category': category,
+        'price': price,
+      };
 }
