@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/views/login.dart';
 import 'package:flutter/material.dart';
 
 class SideBarMenu extends StatelessWidget {
@@ -9,8 +10,8 @@ class SideBarMenu extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 133, 93, 56),
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const <Widget>[
-          DrawerHeader(
+        children: <Widget>[
+          const DrawerHeader(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/side_bar.jpg'),
@@ -32,17 +33,20 @@ class SideBarMenu extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(Icons.menu_book),
             title: Text('Menu'),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(Icons.shopping_cart),
             title: Text('Carrinho'),
           ),
           ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Administrador'),
+            leading: const Icon(Icons.account_circle),
+            title: const Text('Administrador'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+            }
           ),
         ],
       ),
