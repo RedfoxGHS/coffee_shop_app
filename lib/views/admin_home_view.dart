@@ -33,14 +33,13 @@ class AdminHomeView extends StatelessWidget {
           type: MaterialType.transparency,
           child: Ink(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 1.5),
-              color: const Color.fromARGB(255, 61, 177, 121),
+              color: Colors.grey[300],
               shape: BoxShape.circle,
             ),
             child: InkWell(
               borderRadius: BorderRadius.circular(500.0), 
               onTap: () {},
-              child: const Icon(Icons.add, size: 40)
+              child: const Icon(Icons.add, size: 40, color: Color.fromARGB(255, 78, 52, 46))
             ),
           ),
         ),
