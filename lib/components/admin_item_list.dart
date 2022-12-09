@@ -159,7 +159,7 @@ class AdminItemList extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                editItem(Item(itemId: item.itemId, name: name, description: description, category: category, price: price));
+                editItem(Item(name: name, description: description, category: category, price: price), item.itemId);
                 Navigator.pop(context);
               }, 
               child: const Text('Salvar')

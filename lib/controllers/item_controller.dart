@@ -24,9 +24,9 @@ List<Item> parseItems(String responseBody) {
   return parsed.map<Item>((json) => Item.fromJson(json)).toList();
 }
 
-Future<Item> editItem(Item item) async {
+Future<Item> editItem(Item item, int id) async {
   final response = await http.put(
-    Uri.parse('$baseUrl/item/${item.itemId}'),
+    Uri.parse('$baseUrl/item/${id.toString}'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -50,5 +50,21 @@ Future<void> deleteItem(int itemId) async {
 
   if (response.statusCode != 200) {
     throw Exception('Failed to delete item');
+  }
+}
+
+Future<Item> createItem(Item item) async {
+  final response = await http.post(
+    Uri.parse('$baseUrl/item'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(item.toJson()),
+  );
+
+  if (response.statusCode == 200) {
+    return Item.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to create item');
   }
 }
