@@ -26,7 +26,7 @@ List<Item> parseItems(String responseBody) {
 
 Future<Item> editItem(Item item, int id) async {
   final response = await http.put(
-    Uri.parse('$baseUrl/item/${id.toString}'),
+    Uri.parse('$baseUrl/item/$id'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
