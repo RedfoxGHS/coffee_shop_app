@@ -5,14 +5,14 @@ import 'package:http/http.dart' as http;
 
 class ItemsList extends StatelessWidget {
   final List<Item> items;
-  const ItemsList(this.items, {Key? key}) : super(key: key);
+  const ItemsList({Key? key, required this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return itemCard(item: items![index], index: index);
+        return itemCard(item: items[index], index: index);
       },
     );
   }

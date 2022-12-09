@@ -4,29 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AdminItemList extends StatelessWidget {
-  const AdminItemList({Key? key}) : super(key: key);
+  final List<Item> items;
+  const AdminItemList({Key? key, required this.items}) : super(key: key);
 
    @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Item>>(
-      future: fetchItems(http.Client()),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            padding: const EdgeInsets.only(bottom: 75),
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              return itemCard(
-                context: context,
-                item: snapshot.data![index],
-                index: index
-              );
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-        return const CircularProgressIndicator();
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return itemCard(context: context, item: items[index], index: index);
       },
     );
   }

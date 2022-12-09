@@ -1,4 +1,4 @@
-import 'package:coffee_shop_app/components/itemsList.dart';
+import 'package:coffee_shop_app/components/items_list.dart';
 import 'package:coffee_shop_app/views/items_view.dart';
 import 'package:coffee_shop_app/views/sidebar_menu.dart';
 import 'package:flutter/material.dart';
