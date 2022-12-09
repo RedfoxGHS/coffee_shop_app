@@ -4,29 +4,15 @@ import 'package:coffee_shop_app/models/item.dart';
 import 'package:http/http.dart' as http;
 
 class ItemsList extends StatelessWidget {
-
-  const ItemsList({super.key});
+  final List<Item> items;
+  const ItemsList(this.items, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Item>>(
-      future: fetchItems(http.Client()),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            padding: const EdgeInsets.only(bottom: 75),
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              return itemCard(
-                item: snapshot.data![index],
-                index: index
-              );
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-        return const CircularProgressIndicator();
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return itemCard(item: items![index], index: index);
       },
     );
   }
