@@ -1,3 +1,5 @@
+import 'package:coffee_shop_app/components/dropdown_categories.dart';
+import 'package:coffee_shop_app/components/list_of_categories.dart';
 import 'package:coffee_shop_app/controllers/item_controller.dart';
 import 'package:coffee_shop_app/models/item.dart';
 import 'package:flutter/material.dart';
@@ -80,14 +82,15 @@ class AdminItemList extends StatelessWidget {
 
   Builder editItemDialog(Item item) {
     String name = item.name;
-    String category = item.category;
     String description = item.description;
     double price = item.price;
+    DropdownCategories dropdownCategories = DropdownCategories(defaultValue: item.category,);
 
     return Builder(
       builder: (context) {
         return AlertDialog(
           title: Text('Editando item com id: ${item.itemId}'),
+          backgroundColor: const Color.fromARGB(255, 202, 184, 151),
           content: SizedBox(
             height: 300,
             width: 300,
@@ -101,16 +104,6 @@ class AdminItemList extends StatelessWidget {
                   ),
                   onChanged: (value) {
                     name = value;
-                  },
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Categoria',
-                    hintText: item.category,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
-                  onChanged: (value) {
-                    category = value;
                   },
                 ),
                 TextField(
@@ -133,23 +126,43 @@ class AdminItemList extends StatelessWidget {
                     price = double.parse(value);
                   },
                 ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text('Categoria:',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey[700],
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                dropdownCategories,
               ],
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              }, 
-              child: const Text('Cancelar')
-            ),
-            TextButton(
-              onPressed: () {
-                editItem(Item(name: name, description: description, category: category, price: price), item.itemId);
-                Navigator.pop(context);
-              }, 
-              child: const Text('Salvar')
-            ),
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }, 
+                    child: const Text('Cancelar', style: TextStyle(color: Colors.red), textScaleFactor: 1.3)
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      editItem(Item(name: name, description: description, category: dropdownCategories.getDropdownValue(), price: price), item.itemId);
+                      Navigator.pop(context);
+                    }, 
+                    child: const Text('Editar', style: TextStyle(color: Color.fromARGB(255, 33, 117, 36)), textScaleFactor: 1.3)
+                  ),
+                ],
+              ),
+            )
           ],
         );
       },
@@ -161,21 +174,31 @@ class AdminItemList extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: Text('Deletando item com id: ${item.itemId}'),
+          backgroundColor: const Color.fromARGB(255, 202, 184, 151),
           content: Text('Tem certeza que deseja deletar este item [${item.name}]?'),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              }, 
-              child: const Text('Cancelar')
-            ),
-            TextButton(
-              onPressed: () {
-                deleteItem(item.itemId);
-                Navigator.pop(context);
-              }, 
-              child: const Text('Deletar')
-            ),
+
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }, 
+                    child: const Text('Cancelar', style: TextStyle(color: Color.fromARGB(255, 78, 78, 78)), textScaleFactor: 1.3)
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      deleteItem(item.itemId);
+                      Navigator.pop(context);
+                    }, 
+                    child: const Text('Excluir', style: TextStyle(color: Colors.red), textScaleFactor: 1.3)
+                  ),
+                ],
+              ),
+            )
           ],
         );
       },

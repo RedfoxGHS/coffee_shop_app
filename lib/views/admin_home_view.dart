@@ -1,3 +1,5 @@
+import 'package:coffee_shop_app/components/dropdown_categories.dart';
+import 'package:coffee_shop_app/components/list_of_categories.dart';
 import 'package:coffee_shop_app/controllers/item_controller.dart';
 import 'package:coffee_shop_app/models/item.dart';
 import 'package:coffee_shop_app/views/admin_items_view.dart';
@@ -52,8 +54,8 @@ class AdminHomeView extends StatelessWidget {
   }
 
   Builder addNewItemDialog() {
+    DropdownCategories dropdownCategories = DropdownCategories();
     String name = '';
-    String category = '';
     String description = '';
     double price = 0;
 
@@ -61,6 +63,7 @@ class AdminHomeView extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: const Text('Adicionando novo item'),
+          backgroundColor: const Color.fromARGB(255, 202, 184, 151),
           content: SizedBox(
             height: 300,
             width: 300,
@@ -74,16 +77,6 @@ class AdminHomeView extends StatelessWidget {
                   ),
                   onChanged: (value) {
                     name = value;
-                  },
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Categoria',
-                    hintText: 'Categoria do item',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
-                  onChanged: (value) {
-                    category = value;
                   },
                 ),
                 TextField(
@@ -106,23 +99,43 @@ class AdminHomeView extends StatelessWidget {
                     price = double.parse(value);
                   },
                 ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text('Categoria:',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey[700],
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                dropdownCategories,
               ],
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              }, 
-              child: const Text('Cancelar')
-            ),
-            TextButton(
-              onPressed: () {
-                createItem(Item(name: name, description: description, category: category, price: price));
-                Navigator.pop(context);
-              }, 
-              child: const Text('Adicionar')
-            ),
+            SizedBox(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }, 
+                    child: const Text('Cancelar', style: TextStyle(color: Colors.red), textScaleFactor: 1.3)
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      createItem(Item(name: name, description: description, category: dropdownCategories.getDropdownValue() , price: price));
+                      Navigator.pop(context);
+                    }, 
+                    child: const Text('Adicionar', style: TextStyle(color: Color.fromARGB(255, 33, 117, 36)), textScaleFactor: 1.3)
+                  ),
+                ],
+              ),
+            )
           ],
         );
       },
