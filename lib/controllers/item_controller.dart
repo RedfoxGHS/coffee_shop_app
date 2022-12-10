@@ -68,3 +68,13 @@ Future<Item> createItem(Item item) async {
     throw Exception('Failed to create item');
   }
 }
+
+Future<List<Item>> featchItemsByCategory(int categoryId) async {
+  final response = await http.get(Uri.parse('$baseUrl/item/category/$categoryId'));
+
+  if (response.statusCode == 200) {
+    return compute(parseItems, utf8.decode(response.bodyBytes));
+  } else {
+    throw Exception('Failed to load items');
+  }
+}
