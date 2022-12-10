@@ -1,3 +1,4 @@
+[![Flutter CI](https://github.com/RedfoxGHS/coffee_shop_app/actions/workflows/CI.yml/badge.svg)](https://github.com/RedfoxGHS/coffee_shop_app/actions/workflows/CI.yml)
 <h1 align="center">Coffee Shop (APP)</h1>
 <h3 align="center">:building_construction: Em Desenvolvimento :building_construction:</h3>
 
